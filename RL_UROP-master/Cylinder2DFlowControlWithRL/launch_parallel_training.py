@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
     config = {}
 
-    config["learning_rate"] = 1e-4
+    config["learning_rate"] = 3e-4
     config["learning_starts"] = 0
     config["batch_size"] = 128
 
@@ -44,7 +44,7 @@ if __name__ == '__main__':
     config["gamma"] = 0.99
     config["train_freq"] = 1
     config["target_update_interval"] = 1
-    config["gradient_steps"] = 20
+    config["gradient_steps"] = 48
 
     config["buffer_size"] = int(10e5)
     config["optimize_memory_usage"] = False
@@ -58,12 +58,12 @@ if __name__ == '__main__':
                                             #save_buffer=True,
                                             #save_env_stats=True,
                                             save_path=savedir,
-                                            name_prefix='SAC_model')
+                                            name_prefix='SACSO_model')
 
 
     env = SubprocVecEnv([resume_env(nb_actuations,i) for i in range(number_servers)], start_method='spawn')
-
-    model = SAC('MlpPolicy', VecFrameStack(env, n_stack=13), policy_kwargs=policy_kwargs, tensorboard_log=savedir, **config)
+    env = VecFrameStack(env, n_stack=13)
+    model = SAC('MlpPolicy', VecNormalize(env,gamma=0.99), policy_kwargs=policy_kwargs, tensorboard_log=savedir, **config)
     model.learn(15000000, callback=[checkpoint_callback], log_interval=1)
 
    
