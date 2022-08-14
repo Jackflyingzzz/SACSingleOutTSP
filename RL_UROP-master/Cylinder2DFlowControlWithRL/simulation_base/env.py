@@ -40,7 +40,7 @@ def resume_env(plot=False,  # To plot results (Field, controls, lift, drag, rec 
         simulation_duration = 100.0  # duree en secondes de la simulation #50.0 default
         dt = 0.004
         single_input = False
-        single_output = False
+        single_output = True
         include_actions = False
 
         root = 'mesh/turek_2d'  # Root of geometry file path
@@ -88,7 +88,7 @@ def resume_env(plot=False,  # To plot results (Field, controls, lift, drag, rec 
                          'probe_type': 'pressure',  # Set quantity measured by probes (pressure/velocity)
                          'single_input': single_input,
                          # whether to feed as input probe values or difference between average top/bottom pressures
-                         'single_output': single_output,  # whether policy network outputs one or two outputs
+                         'single_output': True,  # whether policy network outputs one or two outputs
                          'symmetric': False,
                          'include_actions': include_actions
                          }
